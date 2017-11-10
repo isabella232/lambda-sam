@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Java example using SignalFx Lambda Wrapper.
+Parameters:
+  SignalFxAuthToken:
+    Type: String
+Resources:
+  SignalFxLambdaExampleJava:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://signalfx-lambda-sam/signalfx-lambda-example-java.zip
+      Handler: com.signalfx.lambda.wrapper.SignalFxRequestWrapper::handleRequest
+      Runtime: java8
+      Environment:
+        Variables:
+          SIGNALFX_AUTH_TOKEN:
+            Ref: SignalFxAuthToken
+          SIGNALFX_LAMBDA_HANDLER: com.signalfx.lambda.example.CustomHandler::handler
+Transform: AWS::Serverless-2016-10-31
