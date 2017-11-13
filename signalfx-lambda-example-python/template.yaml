@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Python example using SignalFx Lambda Wrapper.
+Parameters:
+  SignalFxAuthToken:
+    Type: String
+Resources:
+  SignalFxLambdaExampleJava:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://signalfx-lambda-sam/signalfx-lambda-example-python.zip
+      Handler: index.handler
+      Runtime: python3.6
+      Environment:
+        Variables:
+          SIGNALFX_AUTH_TOKEN:
+            Ref: SignalFxAuthToken
+Transform: AWS::Serverless-2016-10-31
