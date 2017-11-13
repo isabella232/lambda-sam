@@ -1,0 +1,73 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Parameters": {
+    "ExecutionRoleARN": {
+      "Type": "String"
+    },
+    "PlainTextAccessToken": {
+      "Type": "String"
+    },
+    "EncryptedAccessToken": {
+      "Type": "String"
+    },
+    "MetricGroupsToInclude": {
+      "Type": "String"
+    },
+    "MetricGroupsToExclude": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "SignalFxProcessRDSMetrics": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "lambda_script.lambda_handler",
+        "Runtime": "python2.7",
+        "CodeUri": "s3://enhanced-rds-lambda-deployment-package/enhanced_rds.zip",
+        "Description": "Parses Enhanced RDS Monitoring data from CloudWatch Logs and sends it to SignalFx.",
+        "MemorySize": 128,
+        "Timeout": 5,
+        "Environment": {
+          "Variables": {
+            "access_token": { "Ref" : "PlainTextAccessToken" },
+            "encrypted_access_token": { "Ref" : "EncryptedAccessToken" },
+            "groups": { "Ref" : "MetricGroupsToInclude" },
+            "groups_out": { "Ref" : "MetricGroupsToExclude" }
+          }
+        },
+        "Role": { "Ref" : "ExecutionRoleArn" }
+      }
+    },
+    "LambdaInvokePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": { "Fn::GetAtt" : [ "SignalFxProcessRDSMetrics", "Arn" ]},
+        "Action": "lambda:InvokeFunction",
+        "Principal": {
+          "Fn::Join" : [ ".", [ "logs", {
+                "Fn:Select": [ 3, {
+                    "Fn::Split": [ ":", {
+                        "Fn::GetAtt": [ "SignalFxProcessRDSMetrics", "Arn" ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "amazonaws.com"
+            ]
+          ]
+        }
+      }
+    },
+    "CloudWatchLogsRDSOSTrigger": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": { "Fn::GetAtt" : [ "SignalFxProcessRDSMetrics", "Arn" ] },
+        "FilterPattern": "",
+        "LogGroupName": "RDSOSMetrics"
+      },
+      "DependsOn": "LambdaInvokePermission"
+    }
+  }
+}
