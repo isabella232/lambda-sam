@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.signalfx.public</groupId>
             <artifactId>signalfx-lambda</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
+            <version>0.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
