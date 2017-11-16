@@ -24,7 +24,7 @@
       "Properties": {
         "Handler": "lambda_script.lambda_handler",
         "Runtime": "python2.7",
-        "CodeUri": "s3://enhanced-rds-lambda-deployment-package/enhanced_rds.zip",
+        "CodeUri": "https://s3.amazonaws.com/signalfx-lambda-sam/enhanced_rds.zip",
         "Description": "Parses Enhanced RDS Monitoring data from CloudWatch Logs and sends it to SignalFx.",
         "MemorySize": 128,
         "Timeout": 5,
