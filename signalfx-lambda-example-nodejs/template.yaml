@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: JavaScript example using SignalFx Lambda Wrapper.
+Parameters:
+  SignalFxAuthToken:
+    Type: String
+Resources:
+  SignalFxLambdaExampleNodeJs:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://signalfx-lambda-sam/signalfx-lambda-example-nodejs.zip
+      Handler: handler.handler
+      Runtime: nodejs6.10
+      Environment:
+        Variables:
+          SIGNALFX_AUTH_TOKEN:
+            Ref: SignalFxAuthToken
+Transform: AWS::Serverless-2016-10-31
