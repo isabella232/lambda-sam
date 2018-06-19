@@ -9,15 +9,24 @@ this up [here](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monito
 
 ## Setup
 
-### Either deployment method
-Choose security preferences regarding your SignalFx access token.
+### Choose security preferences regarding your SignalFx access token
+The Lambda function requires your SignalFx access token to route
+the metrics to your organization. The token will be saved as an environment
+variable for the function. While Lambda encrypts all environment variables at
+rest and decrypts them upon invocation, AWS recommends that sensitive
+information be encrypted using a KMS key before the creation of the function
+and decrypted at runtime within the code. Either scheme can be configured using
+the Serverless Application Repository template as well as building from source.
 
-### Serverless Application Repository (recommended)
+### Deploying through the Serverless Application Repository (recommended)
 1. Set up an encryption key and encrypt your access token (if desired)
 2. Determine the subset of desired metric groups.
-3. Create and configure the Lambda function.
+3. Create and configure the Lambda function using one of the templates on the
+Serverless Application Repository. Find the template for encrypted access
+tokens [here](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:134183635603:applications~signalfx-enhanced-rds-metrics-encrypted)
+or the non encrypted version [here](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:134183635603:applications~signalfx-enhanced-rds-metrics).
 
-### Building from source
+### Deploying after building from source
 1. Set up the execution role for the Lambda with the proper permissions
 2. Set up a KMS encryption key and encrypt your SignalFx organization access
 token if desired.
@@ -26,15 +35,6 @@ token if desired.
 [here](https://github.com/signalfx/enhanced-rds-monitoring)
 and build the deployment package.
 5. Create and configure the Lambda function.
-
-#### Choose security preferences regarding your SignalFx access token
-The Lambda function requires your SignalFx access token to route
-the metrics to your organization. The token will be saved as an environment
-variable for the function. While Lambda encrypts all environment variables at
-rest and decrypts them upon invocation, AWS recommends that sensitive
-information be encrypted using a KMS key before the creation of the function
-and decrypted at runtime within the code. Either scheme can be configured using
-the Serverless Application Repository template.
 
 ## Deploying through the Serverless Application Repository
 
@@ -52,6 +52,7 @@ key id of the encryption key you used.
 This step is necessary if you only want a subset of the metric groups to be
 reported. You can find documentation on the available metrics
 [here](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuid/USER_Monitoring.OS.html).
+You will be able to apply these choices later in the setup process.
 
 The available groups are as follows:
 
