@@ -42,11 +42,11 @@ and fill out the fields accordingly.
 **Parameters for template using encrypted access tokens**
 - `EncryptedSignalFxAuthToken`: The Ciphertext blob output from your encryption of your SignalFx organization's access token
 - `KeyId`: The key id of your KMS encryption key; it is the last section of the key's ARN.
-- `SelectedMetricGroups`: The metric groups you wish to send. Enter `All` if you want all available metrics. Otherwise, list the names of desired metric groups, spelled exactly as above, separated by single spaces. See [Metrics collected by this integration](#metric-groups-collected-by-this-integration) for options. 
+- `SelectedMetricGroups`: The metric groups you wish to send. Enter `All` if you want all available metrics. Otherwise, list the names of desired metric groups, spelled exactly as they are below, separated by single spaces. See [Metrics collected by this integration](#metric-groups-collected-by-this-integration) for options. 
 
 **Parameters for template using non-encrypted access tokens**
 - `SignalFxAuthToken`: Your SignalFx organization's access token
-- `SelectedMetricGroups`: The metric groups you wish to send. Enter `All` if you want all available metrics. Otherwise, list the names of desired metric groups, spelled exactly as above, separated by single spaces. See [Metrics collected by this integration](#metric-groups-collected-by-this-integration) for options.
+- `SelectedMetricGroups`: The metric groups you wish to send. Enter `All` if you want all available metrics. Otherwise, list the names of desired metric groups, spelled exactly as they are below, separated by single spaces. See [Metrics collected by this integration](#metric-groups-collected-by-this-integration) for options.
 
  
 ### 4. Deploy function and configure trigger
