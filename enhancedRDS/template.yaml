@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  SignalFxAuthToken:
+    Type: String
+  SelectedMetricGroups:
+    Type: String
+Resources:
+  SignalFxProcessRDSMetrics:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_script.lambda_handler
+      Runtime: python2.7
+      CodeUri: s3://signalfx-lambda-sam/enhanced_rds.zip
+      Description: Parses RDS Enhanced Monitoring data from CloudWatch Logs and sends it to SignalFx.
+      Timeout: 5
+      Environment:
+        Variables:
+          access_token:
+            Ref: SignalFxAuthToken
+          groups:
+            Ref: SelectedMetricGroups
