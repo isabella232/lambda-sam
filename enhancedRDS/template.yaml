@@ -20,3 +20,5 @@ Resources:
             Ref: SignalFxAuthToken
           groups:
             Ref: SelectedMetricGroups
+          realm:
+            Ref: Realm

@@ -22,6 +22,8 @@ Resources:
             Ref: EncryptedSignalFxAuthToken
           groups:
             Ref: SelectedMetricGroups
+          realm:
+            Ref: Realm
       Policies:
         - KMSDecryptPolicy:
             KeyId:
