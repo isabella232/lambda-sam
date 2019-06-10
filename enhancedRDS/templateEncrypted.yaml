@@ -7,6 +7,8 @@ Parameters:
     Type: String
   KeyId:
     Type: String
+  Realm:
+    Type: String
 Resources:
   SignalFxProcessRDSMetricsEncrypted:
     Type: AWS::Serverless::Function
